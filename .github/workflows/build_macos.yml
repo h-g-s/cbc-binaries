@@ -34,10 +34,10 @@ jobs:
                         ./Cbc/src/Cbc_C_Interface.cpp
                         -lCbcSolver -lCbc -lCgl -lOsiClp -lClpSolver -lClp -lOsi -lCoinUtils
                         -lbz2 -lz -llapack -lreadline -lm
-    - uses: actions/upload-artifact@v2
-      with:
-        name: cbc-darwin-x86-64
-        path: /Users/runner/prog
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: cbc-darwin-x86-64
+    #     path: /Users/runner/prog
     - uses: actions/upload-artifact@v2
       with:
         name: cbc-c-darwin-x86-64
