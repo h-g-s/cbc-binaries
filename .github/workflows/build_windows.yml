@@ -12,13 +12,9 @@ jobs:
 
     steps:
 
-    - name: checkout
-
       - uses: actions/checkout@v2
-
-    - start-build:
-
-      - uses: numworks/setup-msys2@v1
-
-      - run: msys2do ./build-windows.sh
+         
+      - name: start build:
+       - uses: numworks/setup-msys2@v1
+       - run: msys2do ./build-windows.sh
 
