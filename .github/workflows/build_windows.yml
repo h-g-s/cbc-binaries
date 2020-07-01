@@ -9,7 +9,7 @@ jobs:
     runs-on: windows-2016
     steps:
       - uses: actions/checkout@v2
+      - uses: numworks/setup-msys2@v1
       - name: start build
-        uses: numworks/setup-msys2@v1
         run: msys2do ./build-windows.sh
 
