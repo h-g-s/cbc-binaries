@@ -13,5 +13,6 @@ jobs:
         with:
           update: true
           install: 'git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis'
+      - name: start build
         run: msys2do ./build-windows.sh
 
