@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: numworks/setup-msys2@v1
-      - name: update msys2
-        run: msys2do pacman -Syu  --noconfirm
-      - name: start build
+        with:
+          update: true
+          install: 'git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis'
         run: msys2do ./build-windows.sh
 
