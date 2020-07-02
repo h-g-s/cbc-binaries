@@ -91,7 +91,7 @@ jobs:
         run: wget -nH http://users.cecs.anu.edu.au/~bdm/nauty/nauty27r1.tar.gz ;
              tar zxf nauty27r1.tar.gz ;
              cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; 
-             export CXXFLAGS="-I`pwd`" ; export LDFLAGS="-L`pwd`" ; cd ..
+             cp *.h /mingw64/include/ ; cp *.a /mingw64/lib/ ; cd .. 
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
@@ -103,8 +103,8 @@ jobs:
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
-                        `pkg-config --cflags CbcSolver Cbc Cgl OsiClp ClpSolver Clp Osi CoinUtils`
+                        `pkg-config --cflags cbc cgl osi-clp clp osi coinutils`
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
-                        `pkg-config --libs CbcSolver Cbc Cgl OsiClp ClpSolver Clp Osi CoinUtils` --shared
+                        `pkg-config --libs cbc cgl osi-clp clp osi coinutils` --shared
       - name: Check contents
         run: find / | grep -i "*pthread*.h" ;  find / | grep -i "*lapack*.dll"
