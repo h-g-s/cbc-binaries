@@ -92,8 +92,7 @@ jobs:
              cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; 
              export CXXFLAGS="-I`pwd`" ; export LDFLAGS="-L`pwd`"
       - name: check env vars
-        run: set | grep -i CXXFLAGS
-        run: set | grep -i LDFLAGS
+        run: set | grep -i CXXFLAGS ; set | grep -i LDFLAGS
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
