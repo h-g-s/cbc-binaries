@@ -97,7 +97,8 @@ jobs:
       - name: create install dir
         run: mkdir -p /d/a/prog/
       - name: Build Cbc with coinbrew
-        run: export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
+        run: export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran" ; export CXXFLAGS="-O3 -DNDEBUG" ; 
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
