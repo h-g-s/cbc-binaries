@@ -88,10 +88,8 @@ jobs:
           update: true
           install: git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis mingw-w64-x86_64-toolchain
       - name: install nauty
-        run: wget -nH http://users.cecs.anu.edu.au/~bdm/nauty/nauty27r1.tar.gz ;
-             tar zxf nauty27r1.tar.gz ;
-             cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; 
-             cp *.h /mingw64/include/ ; cp *.a /mingw64/lib/ ; cd .. 
+        run: cd deps/nauty ; ./configure --host=x86_64-w64-mingw32 --prefix=/mingw64 --enable-static --disable-shared  ; make -j 2 ; 
+             cp *.h /mingw64/include/ ; cp *.a /mingw64/lib/ ; cd ../../
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
@@ -109,4 +107,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
-          path: /d/a/prog/lib/cbc-c-windows-x86-64.dll
+          path: d:\a\prog\lib\cbc-c-windows-x86-64.dll
