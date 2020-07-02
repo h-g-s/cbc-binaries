@@ -16,7 +16,6 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          cache: true
           install: git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis mingw-w64-x86_64-toolchain
       - name: install nauty
         run: wget -nH http://users.cecs.anu.edu.au/~bdm/nauty/nauty27r1.tar.gz ;
