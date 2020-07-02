@@ -18,10 +18,11 @@ jobs:
            chmod u+x coinbrew;
            ./coinbrew fetch Cbc:${GITHUB_REF##*/} --no-prompt
     - name: Set environment variables (for building CBC)
-      run: export OSX_VERSION="10.9"; export MACOSX_DEPLOYMENT_TARGET="10.9";
-           export CFLAGS="-fPIC -O3 -DNDEBUG -ffast-math -mmacosx-version-min=10.9 -static";
-           export CXXFLAGS="-fPIC -O3 -DNDEBUG -ffast-math -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.9 -static";
-           export F77FLAGS="-fPIC -O3 -DNDEBUG -ffast-math"; export LDFLAGS="-fPIC -O3 -DNDEBUG -ffast-math";
+      run: export OSX_VERSION="10.9"; 
+           export MACOSX_DEPLOYMENT_TARGET="10.9";
+           export CFLAGS="-fPIC -O3 -DNDEBUG -DCBC_THREAD -ffast-math -mmacosx-version-min=10.9 -static";
+           export CXXFLAGS="-fPIC -O3 -DNDEBUG -DCBC_THREAD -ffast-math -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.9 -static";
+           export F77FLAGS="-fPIC -O3 -DNDEBUG -DCBC_THREAD -ffast-math"; export LDFLAGS="-fPIC -O3 -DNDEBUG -ffast-math";
            export DYLD_LIBRARY_PATH="${HOME}/prog/lib:${DYLD_LIBRARY_PATH}";
     - name: Build static CBC using CoinBrew
       run: sudo ./coinbrew build --prefix=${HOME}/prog Cbc:${GITHUB_REF##*/} 
