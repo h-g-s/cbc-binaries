@@ -95,8 +95,15 @@ jobs:
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
         run: ./coinbrew fetch Cbc@master ; ls -l
+      - name: create install dir
+        run: mkdir -p /d/a/prog/
       - name: Build Cbc with coinbrew
-        run: ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
-                                         --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4
+        run: export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
+                                         --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
+      - name: Build shared library
+        run:  x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
+                        `pkg-config --cflags CbcSolver Cbc Cgl OsiClp ClpSolver Clp Osi CoinUtils`
+                        /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
+                        `pkg-config --libs CbcSolver Cbc Cgl OsiClp ClpSolver Clp Osi CoinUtils` --shared
       - name: Check contents
         run: pwd ; ls -lhct  ;  find ./ | grep -i "\.pc" ;  pkg-config --cflags --libs CbcSolver
