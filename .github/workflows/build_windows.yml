@@ -14,5 +14,7 @@ jobs:
           update: true
           install: 'git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis'
       - name: start build
-        run: msys2do ./build-windows.sh
+        run: msys2do pamac -S git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis --no-confirm
+      - name: get coinbrew
+        run: msys2do wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew
 
