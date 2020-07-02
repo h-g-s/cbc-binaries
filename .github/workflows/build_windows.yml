@@ -20,7 +20,7 @@ jobs:
       - name: install nauty
         run: wget -nH http://users.cecs.anu.edu.au/~bdm/nauty/nauty27r1.tar.gz ;
              tar zxf nauty27r1.tar.gz ;
-             cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; sudo make install
+             cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; make install
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
