@@ -6,13 +6,17 @@ on:
 
 jobs:
   windows-build:
-    runs-on: windows-2019
+    runs-on: windows-2016
     defaults:
       run:
         shell: msys2 {0}
     steps:
-    - uses: msys2/setup-msys2@v1
-      with:
-        update: true
-        install: git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: msys2/setup-msys2@v1
+        with:
+          msystem: MINGW64
+          update: true
+          install: git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis mingw-w64-x86_64-toolchain
+      - name: build
+        run: ./build-windows.sh
+
