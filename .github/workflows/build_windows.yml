@@ -9,12 +9,8 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
-      - uses: numworks/setup-msys2@v1
-        with:
-          update: true
-          install: 'git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis'
+      - name: Install MSYS2
+        run: choco install msys2        
       - name: start build
-        run: msys2do pamac -S git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis --no-confirm
-      - name: get coinbrew
-        run: msys2do wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew
+        run: C:\tools\msys64\usr\bin\bash -lc "ls ; ./build-windows.sh"
 
