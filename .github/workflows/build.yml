@@ -105,7 +105,7 @@ jobs:
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
                         `pkg-config --cflags cbc cgl osi-clp clp osi coinutils`
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
-                        `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
+                        `pkg-config --libs cbc cgl osi-clp clp osi coinutils`  ;  ls -l /d/a/prog/lib/
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
