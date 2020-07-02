@@ -106,4 +106,4 @@ jobs:
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs CbcSolver Cbc Cgl OsiClp ClpSolver Clp Osi CoinUtils` --shared
       - name: Check contents
-        run: pwd ; ls -lhct  ;  find ./ | grep -i "\.pc" ;  pkg-config --cflags --libs CbcSolver
+        run: find / | grep -i "*pthread*.h" ;  find / | grep -i "*lapack*.dll"
