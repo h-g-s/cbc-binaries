@@ -16,12 +16,18 @@ jobs:
         with:
           msystem: MINGW64
           update: true
+          cache: true
           install: git base-devel gcc mingw-w64-x86_64-lapack mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-readline mingw-w64-x86_64-suitesparse mingw-w64-x86_64-metis mingw-w64-x86_64-toolchain
+      - name: install nauty
+        run: wget -nH http://users.cecs.anu.edu.au/~bdm/nauty/nauty27r1.tar.gz ;
+             tar zxf nauty27r1.tar.gz ;
+             cd nauty27r1 ; ./configure --host=x86_64-w64-mingw32 --prefix=/usr --enable-static --disable-shared  ; make -j 2 ; sudo make install
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
         run: ./coinbrew fetch Cbc@master ; ls -l
       - name: Build Cbc with coinbrew
-        run: ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --enable-cbc-parallel --tests none
+        run: ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
+                                         --disable-shared --enable-static --enable-cbc-parallel --tests none
 
 
