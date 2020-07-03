@@ -113,7 +113,7 @@ jobs:
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
-                        `pkg-config --cflags cbc cgl osi-clp clp osi coinutils`
+                        `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - uses: actions/upload-artifact@v2
