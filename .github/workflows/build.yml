@@ -88,7 +88,7 @@ jobs:
           update: true
           install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain
       - name: create install dir
-        run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include
+        run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: install nauty
         run: cd deps/nauty ; ./configure --host=x86_64-w64-mingw32 --prefix=/mingw64 --enable-static --disable-shared  ; make -j 2 ; mkdir -p /d/a/prog/include/nauty ;
              cp *.h /d/a/prog/include/nauty/ ; cp *.a /d/a/prog/lib/ ; cp nauty.a /d/a/prog/lib/libnauty.a ; cd ../../
@@ -109,7 +109,7 @@ jobs:
         run: ls -l /d/a/prog/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L/d/a/prog/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
-             --with-nauty-cflags="-I/d/a/prog/include/" --with-nauty-lflags="/d/a/prog/lib/libnauty.a"
+             --with-nauty-cflags="-I/d/a/prog/include/" --with-nauty-lflags="-L/d/a/prog/lib/ -lnauty"
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
