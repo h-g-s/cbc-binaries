@@ -106,10 +106,10 @@ jobs:
       - name: fetching Cbc with coinbrew
         run: ./coinbrew fetch Cbc@master ; ls -l
       - name: Build Cbc with coinbrew
-        run: ls -l /d/a/cbc-binaries/cbc-binaries/deps/nauty/nauty.a ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L/d/a/prog/lib/" ; 
+        run: ls -l /d/a/prog/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L/d/a/prog/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
-                                         --with-nauty-cflags="-I/d/a/prog/include/" --with-nauty-lflags="-l/d/a/prog/lib/libnauty.a"
+             --with-nauty-cflags="-I/d/a/prog/include/" --with-nauty-lflags="-ld:\d\a\prog\lib\libnauty.a"
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
