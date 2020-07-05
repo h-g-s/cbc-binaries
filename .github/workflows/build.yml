@@ -51,9 +51,9 @@ jobs:
       - name: download GCC 10.1 with static libraries
         run: wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
       - name: build nauty
-        run: export PATH=`pwd`/gcc/bin/:$PATH ; export IDIR=`pwd`/prog/; cd deps/nauty ; 
+        run: export PATH=`pwd`/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ; 
              ./configure --prefix=$IDIR --enable-static --disable-shared ; make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
-               cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
+             mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build metis
         run: echo $PATHS
 
