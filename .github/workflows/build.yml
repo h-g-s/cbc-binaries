@@ -59,7 +59,8 @@ jobs:
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
       - name: build blas
         run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
-             cd deps/blas/ ; libtoolize ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
+             cd deps/blas/ ; aclocal ; autoheader ; automake -a -c --foreign ; autoconf ; 
+             libtoolize ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
         run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
