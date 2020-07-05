@@ -59,7 +59,7 @@ jobs:
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
       - name: build blas
         run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
-             cd deps/blas/ ; aclocal ; automake -a -c --foreign ; autoconf ; 
+             cd deps/blas/ ; aclocal ; automake -a -c --foreign ; 
              libtoolize ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
         run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
