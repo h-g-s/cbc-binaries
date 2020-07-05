@@ -55,7 +55,7 @@ jobs:
              ./configure --prefix=$IDIR --enable-static --disable-shared ; make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
              mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build metis
-        run: echo $PATHS
+        run: echo $PATH
 
   windows-build:
     runs-on: windows-2016
