@@ -53,7 +53,7 @@ jobs:
       - name: build nauty
         run: export PATH=`pwd`/gcc/bin/:$PATH ; export IDIR=`pwd`/prog/; cd deps/nauty ; 
              ./configure --prefix=$IDIR --enable-static --disable-shared ; make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
-               cp *.h /d/a/prog/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
+               cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build metis
         run: echo $PATHS
 
