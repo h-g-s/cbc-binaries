@@ -57,9 +57,9 @@ jobs:
       - name: build zlib
         run:  export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ;
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
-      - name: build blas
-        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
-             cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
+              #      - name: build blas
+              # run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
+              # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
         run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
@@ -74,7 +74,13 @@ jobs:
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps 
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
-
+      - name: Build shared library
+        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+             g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
+             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG -flto -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
+                        /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
+                        `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
+ 
   windows-build:
     runs-on: windows-2016
     defaults:
