@@ -96,8 +96,10 @@ jobs:
         run: git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-O3 -DNDEBUG -flto" ; export LDFLAGS="-flto" ; 
              ./configure --prefix=/d/a/prog/ --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+      - name: build zlib
+        run:  cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=/d/a/prog/ --static ; make -j 2 ; make install ; cd ../../../
       - name: build blas
-        run: cd deps/blas/ ; ./configure --host=x86_64-w64-mingw32 --prefix=/d/a/prog/ --enable-static ; make -j 2 ; make install ; cd ../../
+        run: cd deps/blas/ ; libtoolize ; ./configure --host=x86_64-w64-mingw32 --prefix=/d/a/prog/ --enable-static ; make -j 2 ; make install ; cd ../../
         #- name: build lapack
         #run: git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack  ;
         #     ./configure --prefix=/d/a/prog/ --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
