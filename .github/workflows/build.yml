@@ -44,7 +44,49 @@ jobs:
         name: cbc-c-darwin-x86-64
         path: /Users/runner/prog/lib/cbc-c-darwin-x86-64.dylib
 
-  ubuntu-xenial-static-build:
+  ubuntu-xenial-static-build-debug:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: download GCC 10.1 with static libraries
+        run: cd /opt ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
+      - name: build nauty
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ;  g++ --version ;
+             export CFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared --enable-generic ; 
+             make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
+             mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
+      - name: build zlib
+        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; export CFLAGS="-Og -g3 -fPIC" ;
+              cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
+              #      - name: build blas
+              # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
+              # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
+      - name: build metis
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
+             export CFLAGS="-Og -g3 -fPIC " ; export LDFLAGS="" ; 
+             ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+      - name: get coinbrew
+        run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
+      - name: Build Cbc with coinbrew
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+             ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
+             export CXXFLAGS="-Og -g3   -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps 
+             --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
+             --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
+      - name: Build shared library
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+             g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
+             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
+                        /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
+                        `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cbc-c-linux-x86-64-dbg
+          path: /home/runner/prog/lib/cbc-c-linux-x86-64.so
+
+  ubuntu-xenial-static-build-release:
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v2
@@ -78,7 +120,7 @@ jobs:
       - name: Build shared library
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
-             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG  -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
+             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG  -DCBC_THREAD -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - uses: actions/upload-artifact@v2
@@ -127,7 +169,7 @@ jobs:
                                          --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
         run:  export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; x86_64-w64-mingw32-g++ -shared -o /d/a/prog/lib/cbc-c-windows-x86-64.dll
-                        `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays
+                        `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG  -DCBC_THREAD -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - uses: actions/upload-artifact@v2
