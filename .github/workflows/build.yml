@@ -77,7 +77,7 @@ jobs:
       - name: Build shared library
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
-             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG  -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
+             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG  -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - uses: actions/upload-artifact@v2
