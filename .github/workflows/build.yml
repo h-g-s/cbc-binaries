@@ -49,33 +49,33 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: download GCC 10.1 with static libraries
-        run: cd /home/runner ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
+        run: cd /opt ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
       - name: build nauty
-        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ;  g++ --version ;
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ;  g++ --version ;
              ./configure --prefix=$IDIR --enable-static --disable-shared ; make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
              mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build zlib
-        run:  export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ;
+        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ;
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
               #      - name: build blas
-              # run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
+              # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
               # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
-        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-O3 -DNDEBUG -flto" ; export LDFLAGS="-flto" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
-        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L${IDIR}/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -flto -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps 
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
-        run: export PATH=/home/runner/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
              `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG -flto -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
