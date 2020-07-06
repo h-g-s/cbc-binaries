@@ -56,15 +56,15 @@ jobs:
              make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
              mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build zlib
-        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ;
+        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; export CFLAGS="-O3 -fPIC" ;
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
               #      - name: build blas
               # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
               # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
-        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
-             export CFLAGS="-O3 -DNDEBUG " ; export LDFLAGS="" ; 
+             export CFLAGS="-O3 -fPIC -DNDEBUG" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
