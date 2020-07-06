@@ -52,7 +52,8 @@ jobs:
         run: cd /opt ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
       - name: build nauty
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ;  g++ --version ;
-             ./configure --prefix=$IDIR --enable-static --disable-shared ; make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
+             export CFLAGS="-O3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared --enable-generic ; 
+             make -j 2 ;  mkdir -p ${IDIR}/include ; mkdir -p ${IDIR}/include/nauty ;
              mkdir -p ${IDIR}/lib ; cp *.h ${IDIR}/include/nauty/ ; cp *.a ${IDIR}/lib/ ; cp nauty.a ${IDIR}/lib/libnauty.a ; cd ../../
       - name: build zlib
         run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ;
@@ -100,7 +101,8 @@ jobs:
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: install nauty
-        run: cd deps/nauty ; ./configure --host=x86_64-w64-mingw32 --prefix=/mingw64 --enable-static --disable-shared  ; make -j 2 ; mkdir -p /d/a/prog/include/nauty ;
+        run: cd deps/nauty ; export CFLAGS="-O3 -fPIC" ; ./configure --host=x86_64-w64-mingw32 --prefix=/mingw64 --enable-static --disable-shared --enable-generic ; 
+             make -j 2 ; mkdir -p /d/a/prog/include/nauty ;
              cp *.h /d/a/prog/include/nauty/ ; cp *.a /d/a/prog/lib/ ; cp nauty.a /d/a/prog/lib/libnauty.a ; cd ../../
       - name: build metis
         run: git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
