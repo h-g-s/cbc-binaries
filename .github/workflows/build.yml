@@ -85,6 +85,11 @@ jobs:
         with:
           name: cbc-c-linux-x86-64-dbg
           path: /home/runner/prog/lib/cbc-c-linux-x86-64.so
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cbc-bin-linux-x86-64-dbg
+          path: /home/runner/prog/bin/cbc
+
 
   ubuntu-xenial-static-build-release:
     runs-on: ubuntu-16.04
