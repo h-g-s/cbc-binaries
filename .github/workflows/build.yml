@@ -71,14 +71,14 @@ jobs:
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-Og -g3 -fsanitize=address,leak -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
+             export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --without-data
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
-             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address,leak -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
+             `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
 
