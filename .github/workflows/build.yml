@@ -90,7 +90,7 @@ jobs:
              export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
-                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -lasan -ldl
+                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -lasan -ldl -lpthread
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-linux-x86-64-dbg-asan
