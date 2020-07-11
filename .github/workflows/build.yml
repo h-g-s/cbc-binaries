@@ -83,7 +83,7 @@ jobs:
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
 
-      - uses: Build c-interface-solver
+      - name: Build c-interface-solver
         run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
              export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
