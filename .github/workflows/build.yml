@@ -71,9 +71,9 @@ jobs:
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-Og -g3 -fsanitize=address,leak -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
-             export LDFLAGS="-Og -g3 -fsanitize=address,leak" ;
-             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps 
+             export CXXFLAGS="-Og -g3 -fsanitize=address,leak -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
+             export LDFLAGS="-Og -g3 -fsanitize=address,leak -fPIC" ;
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --without-data
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
