@@ -61,6 +61,10 @@ jobs:
               #      - name: build blas
               # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
               # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
+      - name: build bz2
+        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; 
+              cd deps/bzip2-1.0.8/ ; make libbz2.a ; make -j 2 ;  
+              cp libbz2.a ${IDIR}/lib ; cp *.h ${IDIR}/include/ ; cd ../../
       - name: build metis
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
@@ -133,6 +137,10 @@ jobs:
       - name: build zlib
         run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; export CFLAGS="-Og -g3 -fPIC" ;
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
+      - name: build bz2
+        run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; 
+              cd deps/bzip2-1.0.8/ ; make libbz2.a ; make -j 2 ;  
+              cp libbz2.a ${IDIR}/lib ; cp *.h ${IDIR}/include/ ; cd ../../
       - name: build metis
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
@@ -205,7 +213,7 @@ jobs:
       - name: build bz2
         run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; 
               cd deps/bzip2-1.0.8/ ; make libbz2.a ; make -j 2 ;  
-              cp libbz2.a ${IDIR}/lib ; cp bzlib.h ${IDIR}/include/ ; cd ../../
+              cp libbz2.a ${IDIR}/lib ; cp *.h ${IDIR}/include/ ; cd ../../
               # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
               # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
