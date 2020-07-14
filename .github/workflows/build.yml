@@ -180,6 +180,20 @@ jobs:
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-O3 -fPIC -DNDEBUG" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+      - name: blas
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
+             export FFLAGS="-O3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinblas.a $IDIR/lib/libblas.a ;
+             ln -s $IDIR/lib/libcoinblas.la $IDIR/lib/libblas.la ; 
+             ln -s $IDIR/lib/pkgconfig/coinblas.pc $IDIR/lib/pkgconfig/blas.pc
+      - name: lapack
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack ; 
+             export FFLAGS="-O3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
+             ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
+             ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
@@ -226,8 +240,8 @@ jobs:
       - name: build zlib
         run:  cd deps/zlib/zlib-1.2.11/ ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ;
               ./configure --prefix=/d/a/prog/ --static ; make -j 2 ; make install ; cd ../../../
-      - name: build blas
-        run: cd deps/blas/ ; libtoolize ; ./configure --host=x86_64-w64-mingw32 --prefix=/d/a/prog/ --enable-static ; make -j 2 ; make install ; cd ../../
+        #- name: build blas
+        #        run: cd deps/blas/ ; libtoolize ; ./configure --host=x86_64-w64-mingw32 --prefix=/d/a/prog/ --enable-static ; make -j 2 ; make install ; cd ../../
         #- name: build lapack
         #run: git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack  ;
         #     ./configure --prefix=/d/a/prog/ --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
