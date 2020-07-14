@@ -167,6 +167,11 @@ jobs:
              `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
+      - name: Build c-interface-solver
+        run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
+             export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+             ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -L${IDIR}/lib/" ; 
+             export CXXFLAGS="-Og -g3 -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-linux-x86-64-dbg
@@ -175,6 +180,11 @@ jobs:
         with:
           name: cbc-bin-linux-x86-64-dbg
           path: /home/runner/prog/bin/cbc
+      - uses: actions/upload-artifact@v2
+        with:
+          name: c-interface-solver-linux-x86-64-dbg
+          path: /home/runner/prog/bin/c-interface-solver
+
 
 
   ubuntu-xenial-static-build-release:
