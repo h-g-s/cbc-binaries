@@ -66,6 +66,20 @@ jobs:
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-Og -g3 -fPIC" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+      - name: blas
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
+             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinblas.a $IDIR/lib/libblas.a ;
+             ln -s $IDIR/lib/libcoinblas.la $IDIR/lib/libblas.la ; 
+             ln -s $IDIR/lib/pkgconfig/coinblas.pc $IDIR/lib/pkgconfig/blas.pc
+      - name: lapack
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack ; 
+             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
+             ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
+             ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
@@ -82,7 +96,6 @@ jobs:
              `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
                         /home/runner/work/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
-
       - name: Build c-interface-solver
         run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
              export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
@@ -105,14 +118,13 @@ jobs:
           path: /home/runner/prog/bin/c-interface-solver
 
 
-
-
   ubuntu-xenial-static-build-debug:
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v2
       - name: download GCC 10.1 with static libraries
-        run: cd /opt ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz 
+        run: cd /opt ; wget -nH www.decom.ufop.br/haroldo/files/gcc-xenial-x86-64.tar.xz ; tar Jxf gcc-xenial-x86-64.tar.xz ;
+             export PATH=/opt/gcc/bin/:$PATH ; gcc --version
       - name: build nauty
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; cd deps/nauty ;  g++ --version ;
              export CFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared --enable-generic ; 
@@ -121,14 +133,25 @@ jobs:
       - name: build zlib
         run:  export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/ ; export CFLAGS="-Og -g3 -fPIC" ;
               cd deps/zlib/zlib-1.2.11/ ; ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
-              #      - name: build blas
-              # run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; 
-              # cd deps/blas/ ; libtoolize ; automake -a ; aclocal ; ./configure --prefix=${IDIR} --enable-static ; make -j 2 ; make install ; cd ../../
       - name: build metis
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-Og -g3 -fPIC" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+      - name: blas
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
+             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinblas.a $IDIR/lib/libblas.a ;
+             ln -s $IDIR/lib/libcoinblas.la $IDIR/lib/libblas.la ; 
+             ln -s $IDIR/lib/pkgconfig/coinblas.pc $IDIR/lib/pkgconfig/blas.pc
+      - name: lapack
+        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack ; 
+             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
+             ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
+             ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
@@ -230,21 +253,33 @@ jobs:
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: install nauty
         run: cd deps/nauty ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ; 
-             ./configure --host=x86_64-w64-mingw32 --prefix=/mingw64 --enable-static --disable-shared --enable-generic ; 
+             export IDIR=/d/a/prog/ ;
+             ./configure --host=x86_64-w64-mingw32 --prefix=$IDIR --enable-static --disable-shared --enable-generic ; 
              make -j 2 ; mkdir -p /d/a/prog/include/nauty ;
              cp *.h /d/a/prog/include/nauty/ ; cp *.a /d/a/prog/lib/ ; cp nauty.a /d/a/prog/lib/libnauty.a ; cd ../../
       - name: build metis
         run: git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
+             export IDIR=/d/a/prog/ ;
              export CFLAGS="-O3 -DNDEBUG -flto -fPIC" ; export LDFLAGS="-flto" ; 
-             ./configure --prefix=/d/a/prog/ --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+             ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
       - name: build zlib
         run:  cd deps/zlib/zlib-1.2.11/ ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ;
-              ./configure --prefix=/d/a/prog/ --static ; make -j 2 ; make install ; cd ../../../
-        #- name: build blas
-        #        run: cd deps/blas/ ; libtoolize ; ./configure --host=x86_64-w64-mingw32 --prefix=/d/a/prog/ --enable-static ; make -j 2 ; make install ; cd ../../
-        #- name: build lapack
-        #run: git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack  ;
-        #     ./configure --prefix=/d/a/prog/ --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
+              export IDIR=/d/a/prog/ ;
+              ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
+      - name: blas
+        run: export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
+             export FFLAGS="-O3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinblas.a $IDIR/lib/libblas.a ;
+             ln -s $IDIR/lib/libcoinblas.la $IDIR/lib/libblas.la ; 
+             ln -s $IDIR/lib/pkgconfig/coinblas.pc $IDIR/lib/pkgconfig/blas.pc
+      - name: lapack
+        run: export IDIR=/home/runner/prog/;  
+             git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack ; 
+             export FFLAGS="-O3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
+             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
+             ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
+             ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
