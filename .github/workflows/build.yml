@@ -104,7 +104,7 @@ jobs:
         run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
              export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -lasan -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
+             export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
                         c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -lasan -ldl -lpthread
@@ -165,7 +165,7 @@ jobs:
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-Og -g3   -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
+             export CXXFLAGS="-Og -g3   -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps 
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
@@ -179,7 +179,10 @@ jobs:
         run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
              export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-Og -g3 -I${IDIR}/include/ -I${IDIR}/include/coin-or/ " ; 
+             export CXXFLAGS="-Og -g3 -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
+                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-linux-x86-64-dbg
