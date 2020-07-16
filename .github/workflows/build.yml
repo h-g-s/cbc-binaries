@@ -257,6 +257,20 @@ jobs:
         with:
           name: cbc-c-linux-x86-64
           path: /home/runner/prog/lib/cbc-c-linux-x86-64.so
+      - name: Build c-interface-solver
+        run: wget -nH https://raw.githubusercontent.com/h-g-s/cbc-tests/master/tests/c-interface-solver.c ;
+             export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
+             ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -L${IDIR}/lib/" ; 
+             export CXXFLAGS="-O3 -DNDEBUG -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG -DCBC_THREAD -I${IDIR}/include/coin-or/ 
+                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
+      - uses: actions/upload-artifact@v2
+        with:
+          name: c-interface-solver-linux-x86-64
+          path: /home/runner/prog/bin/c-interface-solver
+
+
 
   windows-build:
     runs-on: windows-2016
