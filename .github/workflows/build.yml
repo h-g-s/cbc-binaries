@@ -283,7 +283,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain
+          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain mingw-w64-x86_64-ntldd
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: install nauty
@@ -332,6 +332,8 @@ jobs:
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - name: Check dependencies
         run: ldd /d/a/prog/bin/cbc.exe
+      - name: Check dependencies ntldd
+        run: ntldd /d/a/prog/bin/cbc.exe
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
