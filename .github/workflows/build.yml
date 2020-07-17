@@ -323,6 +323,8 @@ jobs:
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: fetching Cbc with coinbrew
         run: ./coinbrew fetch Cbc@master ; ls -l
+      - name: Search winpthread
+        run: find / | grep -i libwinpthread
       - name: Build Cbc with coinbrew
         run: ls -l /d/a/prog/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L/d/a/prog/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays" ; 
