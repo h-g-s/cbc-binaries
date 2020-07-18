@@ -339,7 +339,7 @@ jobs:
       - name: Check dependencies ntldd
         run: ntldd /d/a/prog/bin/cbc.exe ; ntldd /mingw64/bin/libwinpthread-1.dll
       - name: Build shared dir and copy dependency
-        run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll 
+        run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll /d/a/prog/shared/
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
