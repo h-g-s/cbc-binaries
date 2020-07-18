@@ -287,7 +287,7 @@ jobs:
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: Remove dynamic winpthread
-        run: rm /mingw64/x86_64-w64-mingw32/lib/libwinpthread.dll.a ; rm /mingw64/x86_64-w64-mingw32/lib/libwinpthread.dll
+        run: rm /mingw64/x86_64-w64-mingw32/lib/libwinpthread.dll.a ; /mingw64/bin/libwinpthread-1.dll
       - name: install nauty
         run: cd deps/nauty ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ; 
              export IDIR=/d/a/prog/ ;
