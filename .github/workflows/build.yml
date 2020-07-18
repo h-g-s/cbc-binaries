@@ -337,7 +337,7 @@ jobs:
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
       - name: Check dependencies ntldd
-        run: ntldd /d/a/prog/bin/cbc.exe
+        run: ntldd /d/a/prog/bin/cbc.exe ; ntldd /mingw64/bin/libwinpthread-1.dll
       - name: Build shared dir and copy dependency
         run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll 
       - uses: actions/upload-artifact@v2
