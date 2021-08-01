@@ -299,10 +299,6 @@ jobs:
              export IDIR=/d/a/prog/ ;
              export CFLAGS="-O3 -DNDEBUG -flto -fPIC" ; export LDFLAGS="-flto" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
-      - name: build zlib
-        run:  cd deps/zlib/zlib-1.2.11/ ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ;
-              export IDIR=/d/a/prog/ ;
-              ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
       - name: blas
         run: export IDIR=/home/runner/prog/;  
              git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
