@@ -296,8 +296,8 @@ jobs:
              cp *.h /d/a/prog/include/nauty/ ; cp *.a /d/a/prog/lib/ ; cp nauty.a /d/a/prog/lib/libnauty.a ; cd ../../
       - name: build zlib
         run:  cd deps/zlib/zlib-1.2.11/ ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ;
-              export IDIR=/d/a/prog/ ; cd win32 ; cp Makefile.gcc ../Makefile ; cd .. ;
-              ./configure --prefix=${IDIR} --static ; make -j 2 ; make install ; cd ../../../
+              export IDIR=/d/a/prog/ ; 
+              ./configure --prefix=${IDIR} --static ; make -j 2 -f win32/Makefile.gcc ; make install ; cd ../../../
       - name: build metis
         run: git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export IDIR=/d/a/prog/ ;
