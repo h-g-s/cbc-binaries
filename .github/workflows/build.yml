@@ -297,7 +297,7 @@ jobs:
       - name: build zlib
         run:  cd deps/zlib/zlib-1.2.11/ ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ;
               export IDIR=/d/a/prog/ ; 
-              make -f win32/Makefile.gcc -j 2 ; make -f win32/Makefile.gcc install ; cd ../../../
+              make -f win32/Makefile.gcc -j 2 ; find ./ | grep libz.a ; make -f win32/Makefile.gcc install ; cd ../../../
       - name: build metis
         run: git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export IDIR=/d/a/prog/ ;
