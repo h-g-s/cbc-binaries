@@ -326,7 +326,7 @@ jobs:
       - name: Build Cbc with coinbrew
         run: ls -l /d/a/prog/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -flto -L/d/a/prog/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays" ; 
-             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps 
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/d/a/prog/lib/pkgconfig ; ./coinbrew build Cbc@master --host=x86_64-w64-mingw32 --without-glpk --without-asl --without-mumps --without-bz2
              --with-nauty-cflags="-I/d/a/prog/include/" --with-nauty-lflags="-L/d/a/prog/lib/ -lnauty"
                                          --enable-cbc-parallel --disable-shared --enable-static --tests none --verbosity=4 --prefix=/d/a/prog/
       - name: Build shared library
