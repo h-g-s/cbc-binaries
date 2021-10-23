@@ -44,8 +44,8 @@ jobs:
         name: cbc-c-darwin-x86-64
         path: /Users/runner/prog/lib/cbc-c-darwin-x86-64.dylib
 
-  ubuntu-xenial-static-build-debug-asan:
-    runs-on: ubuntu-16.04
+  ubuntu-bionic-static-build-debug-asan:
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - name: download GCC 10.1 with static libraries
@@ -122,8 +122,8 @@ jobs:
           path: /home/runner/prog/bin/c-interface-solver
 
 
-  ubuntu-xenial-static-build-debug:
-    runs-on: ubuntu-16.04
+  ubuntu-bionic-static-build-debug:
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - name: download GCC 10.1 with static libraries
@@ -198,8 +198,8 @@ jobs:
 
 
 
-  ubuntu-xenial-static-build-release:
-    runs-on: ubuntu-16.04
+  ubuntu-bionic-static-build-release:
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - name: download GCC 10.1 with static libraries
