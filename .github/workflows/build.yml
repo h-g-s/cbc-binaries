@@ -243,8 +243,8 @@ jobs:
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
-             export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
-             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --disable-gnu-packages 
+             export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; sudo apt-get remove libreadline-dev ;
+             export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps  
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
              --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
