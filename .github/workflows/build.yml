@@ -343,7 +343,7 @@ jobs:
       - name: Check dependencies bzip2
         run: ntldd /mingw64/bin/libbz2-1.dll
       - name: Build shared dir and copy dependency
-        run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libbz2-1.dll /d/a/prog/shared/ ; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll /d/a/prog/shared/
+        run: mkdir -p /d/a/prog/shared/ ; cp /mingw64/bin/libbz2-1.dll /d/a/prog/shared/ ; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll /d/a/prog/shared/ ; cp /mingw64/bin/libgcc_s_seh-1.dll /d/a/prog/shared/ ; cp /mingw64/bin/libstdc++-6.dll /d/a/prog/shared/
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
