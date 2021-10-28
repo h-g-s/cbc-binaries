@@ -334,10 +334,16 @@ jobs:
                         `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -O3 -DNDEBUG  -DCBC_THREAD -flto -I/d/a/prog/include/coin-or/ -fprefetch-loop-arrays
                         /d/a/cbc-binaries/cbc-binaries/Cbc/src/Cbc_C_Interface.cpp
                         `pkg-config --libs cbc cgl osi-clp clp osi coinutils`
-      - name: Check dependencies ntldd
-        run: ntldd /d/a/prog/bin/cbc.exe ; ntldd /mingw64/bin/libwinpthread-1.dll
+      - name: Check dependencies cbc
+        run: ntldd /d/a/prog/bin/cbc.exe
+      - name: Check dependencies cbc library
+        run: ntldd /d/a/prog/lib/cbc-c-windows-x86-64.dll
+      - name: Check dependencies pthread
+        run: ntldd /mingw64/bin/libwinpthread-1.dll
+      - name: Check dependencies bzip2
+        run: ntldd /mingw64/bin/libbz2-1.dll
       - name: Build shared dir and copy dependency
-        run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll /d/a/prog/shared/
+        run: mkdir -p /d/a/prog/shared/; cp /mingw64/bin/libbz2-1.dll /d/a/prog/shared/ ; cp /mingw64/bin/libwinpthread-1.dll /d/a/prog/shared/ ; cp /d/a/prog/lib/cbc-c-windows-x86-64.dll /d/a/prog/shared/
       - uses: actions/upload-artifact@v2
         with:
           name: cbc-c-windows-x86-64
