@@ -71,7 +71,7 @@ jobs:
              export CFLAGS="-Og -g3 -fPIC" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
       - name: install libsuitesparse
-             sudo apt-get install libsuitesparse-dev ;
+        run: sudo apt-get install libsuitesparse-dev ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/libamd*.so* ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/libblas*.so* ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/liblapack*.so* ;
@@ -238,7 +238,7 @@ jobs:
              ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
              ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: install libsuitesparse
-             sudo apt-get install libsuitesparse-dev ;
+        run: sudo apt-get install libsuitesparse-dev ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/libamd*.so* ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/libblas*.so* ;
              sudo rm -rf /usr/lib/x86_64-linux-gnu/liblapack*.so* ;
