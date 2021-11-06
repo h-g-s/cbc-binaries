@@ -90,7 +90,7 @@ jobs:
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; 
              sudo apt-get remove --yes libreadline-dev ;
-             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ;
+             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libblas*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/liblapack*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcolamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ;   sudo rm /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libklu*.so* ;
              export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
              export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
              export LDFLAGS="-lasan" ; 
@@ -248,7 +248,7 @@ jobs:
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; 
              sudo apt-get remove --yes libreadline-dev ;
-             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ;
+             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libblas*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/liblapack*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcolamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ;   sudo rm /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libklu*.so* ;
              export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps  
