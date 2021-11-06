@@ -253,7 +253,7 @@ jobs:
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; 
              sudo apt-get remove --yes libreadline-dev ;
-             export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
+             export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/ -l/usr/lib/x86_64-linux-gnu/libsuitesparseconfig.a" ; 
              export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps  
              --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
