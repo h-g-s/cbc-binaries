@@ -70,27 +70,22 @@ jobs:
              git clone https://github.com/coin-or-tools/ThirdParty-Metis.git ; cd ThirdParty-Metis ; ./get.Metis ; 
              export CFLAGS="-Og -g3 -fPIC" ; export LDFLAGS="" ; 
              ./configure --prefix=${IDIR} --disable-shared --enable-static ; make -j 2 ; make install ; cd ..
-      - name: blas
-        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
-             git clone https://github.com/coin-or-tools/ThirdParty-Blas.git ; cd ThirdParty-Blas ; ./get.Blas ; 
-             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
-             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinblas.a $IDIR/lib/libblas.a ;
-             ln -s $IDIR/lib/libcoinblas.la $IDIR/lib/libblas.la ; 
-             ln -s $IDIR/lib/pkgconfig/coinblas.pc $IDIR/lib/pkgconfig/blas.pc
-      - name: lapack
-        run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;  
-             git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git ; cd ThirdParty-Lapack/ ; ./get.Lapack ; 
-             export FFLAGS="-Og -g3 -fPIC" ; ./configure --prefix=$IDIR --enable-static --disable-shared ;
-             make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
-             ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
-             ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
+      - name: install libsuitesparse
+             sudo apt-get install libsuitesparse-dev ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libblas*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/liblapack*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcolamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; 
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ; 
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libklu*.so* ;
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; 
              sudo apt-get remove --yes libreadline-dev ;
-             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libblas*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/liblapack*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcolamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ;   sudo rm /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libklu*.so* ;
              export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
              export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
              export LDFLAGS="-lasan" ; 
@@ -242,13 +237,22 @@ jobs:
              make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
              ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
              ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
+      - name: install libsuitesparse
+             sudo apt-get install libsuitesparse-dev ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libblas*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/liblapack*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcolamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; 
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ; 
+             sudo rm -rf /usr/lib/x86_64-linux-gnu/libklu*.so* ;
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/;
              ls -l ${IDIR}/lib/ ; 
              sudo apt-get remove --yes libreadline-dev ;
-             sudo apt-get install libsuitesparse-dev ; sudo rm /usr/lib/x86_64-linux-gnu/libamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libblas*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/liblapack*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libcolamd*.so* ; sudo rm /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libcholmod*.so* ;   sudo rm /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ;  sudo rm /usr/lib/x86_64-linux-gnu/libklu*.so* ;
              export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps  
@@ -276,8 +280,6 @@ jobs:
         with:
           name: c-interface-solver-linux-x86-64
           path: /home/runner/prog/bin/c-interface-solver
-
-
 
   windows-build:
     runs-on: windows-2016
