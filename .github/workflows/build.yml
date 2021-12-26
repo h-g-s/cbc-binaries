@@ -256,6 +256,7 @@ jobs:
              export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran  -L${IDIR}/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG  -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fprefetch-loop-arrays" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
+             echo "running: ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --with-nauty-cflags=-I${IDIR}/include/ --with-nauty-lflags=-L${IDIR}/lib/ -lnauty -L/usr/lib/x86_64-linux-gnu/ --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/"
              ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty" -L/usr/lib/x86_64-linux-gnu/ --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
