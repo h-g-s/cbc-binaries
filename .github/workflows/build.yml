@@ -6,7 +6,7 @@ on:
 
 jobs:
   macos-static-build:
-    runs-on: macos-latest
+    runs-on: macos-10.15
     steps:
     - name: Install pkg-config dependency
       run: brew install pkg-config;
@@ -237,16 +237,9 @@ jobs:
              make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
              ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
              ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
-      - name: install libsuitesparse
-        run: sudo apt-get install libsuitesparse-dev ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libamd*.so* ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libblas*.so* ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/liblapack*.so* ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcolamd*.so* ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libccolamd*.so* ;
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcholmod*.so* ; 
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libcxsparse*.so* ; 
-             sudo rm -rf /usr/lib/x86_64-linux-gnu/libklu*.so* ;
+      - name: build suitesparte
+        run: git clone https://github.com/DrTimothyAldenDavis/SuiteSparse.git ;
+             export PATH=/opt/gcc/bin/:$PATH ; cd SuiteSparse ; export IDIR=/home/runner/prog/; make AMD CHOLMOD CAMD COLAMD ; make INSTALL=${IDIR} ; ls ${IDIR}/lib/
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
@@ -292,7 +285,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain mingw-w64-x86_64-ntldd
+          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain mingw-w64-x86_64-ntldd tar
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: copy pthread static
