@@ -239,7 +239,7 @@ jobs:
              ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
       - name: build suitesparte
         run: git clone https://github.com/DrTimothyAldenDavis/SuiteSparse.git ;
-             export PATH=/opt/gcc/bin/:$PATH ; cd SuiteSparse ; export IDIR=/home/runner/prog/; make AMD CHOLMOD CAMD COLAMD ; make INSTALL=${IDIR} ; ls ${IDIR}/lib/
+             export PATH=/opt/gcc/bin/:$PATH ; cd SuiteSparse ; export IDIR=/home/runner/prog/ ; export LD_LIBRARY_PATH=${IDIR}/lib/:$LD_LIBRARY_PATH ; make AMD CHOLMOD CAMD COLAMD ; make INSTALL=${IDIR} ; ls ${IDIR}/lib/ ; rm ${IDIR}/lib/*.so*
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
