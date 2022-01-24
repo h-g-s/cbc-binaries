@@ -30,7 +30,7 @@ jobs:
                                  --disable-shared --enable-static --enable-cbc-parallel 
                                  --no-prompt --verbosity=4 --parallel-jobs=2 --tests none
     - name: Build shared library for C Interface
-      run: sudo clang++ -shared ${CXXFLAGS} -o ${HOME}/prog/lib/cbc-c-darwin-x86-64.dylib
+      run: ls ${HOME}/prog/lib ; sudo clang++ -shared ${CXXFLAGS} -o ${HOME}/prog/lib/cbc-c-darwin-x86-64.dylib
                         -I${HOME}/prog/include/coin-or/ -I${HOME}/prog/include/coin/ -L${HOME}/prog/lib
                         ./Cbc/src/Cbc_C_Interface.cpp
                         -lCbcSolver -lCbc -lCgl -lOsiClp -lClpSolver -lClp -lOsi -lCoinUtils -lCoinGlpk -lOsiCbc
@@ -237,9 +237,9 @@ jobs:
              make -j 2 ; make install ; ln -s $IDIR/lib/libcoinlapack.a $IDIR/lib/liblapack.a ;
              ln -s $IDIR/lib/libcoinlapack.la $IDIR/lib/liblapack.la ;
              ln -s $IDIR/lib/pkgconfig/coinlapack.pc $IDIR/lib/pkgconfig/lapack.pc
-      - name: build suitesparte
-        run: git clone https://github.com/DrTimothyAldenDavis/SuiteSparse.git ;
-             export PATH=/opt/gcc/bin/:$PATH ; cd SuiteSparse ; export IDIR=/home/runner/prog/ ; export LD_LIBRARY_PATH=${IDIR}/lib/:$LD_LIBRARY_PATH ; make AMD CHOLMOD CAMD COLAMD ; make INSTALL=${IDIR} ; ls ${IDIR}/lib/ ; rm ${IDIR}/lib/*.so*
+      # - name: build suitesparte
+             # run: git clone https://github.com/DrTimothyAldenDavis/SuiteSparse.git ;
+             # export PATH=/opt/gcc/bin/:$PATH ; cd SuiteSparse ; export IDIR=/home/runner/prog/ ; export LD_LIBRARY_PATH=${IDIR}/lib/:$LD_LIBRARY_PATH ; make AMD CHOLMOD CAMD COLAMD ; make INSTALL=${IDIR} ; ls ${IDIR}/lib/ ; rm ${IDIR}/lib/*.so*
       - name: get coinbrew
         run: wget https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew ; chmod u+x ./coinbrew
       - name: Build Cbc with coinbrew
