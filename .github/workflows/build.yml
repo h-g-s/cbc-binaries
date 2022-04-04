@@ -33,7 +33,7 @@ jobs:
       run: ls ${HOME}/prog/lib ; sudo clang++ -shared ${CXXFLAGS} -o ${HOME}/prog/lib/cbc-c-darwin-x86-64.dylib
                         -I${HOME}/prog/include/coin-or/ -I${HOME}/prog/include/coin/ -L${HOME}/prog/lib
                         ./Cbc/src/Cbc_C_Interface.cpp
-                        -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lCoinGlpk -lOsiCbc
+                        -lCbc -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lOsiCbc
                         -lbz2 -lz -llapack -lreadline -lm
     # - uses: actions/upload-artifact@v2
     #   with:
