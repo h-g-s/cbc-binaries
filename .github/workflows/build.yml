@@ -275,7 +275,7 @@ jobs:
           path: /home/runner/prog/bin/c-interface-solver
 
   windows-build:
-    runs-on: windows-2016
+    runs-on: windows-2019
     defaults:
       run:
         shell: msys2 {0}
