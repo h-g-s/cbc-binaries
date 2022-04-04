@@ -289,7 +289,7 @@ jobs:
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: copy pthread static
-        run: ls /mingw64/ -l ; ls /mingw64/x86_64-w64-mingw32/lib/* -l ; cp /mingw64/x86_64-w64-mingw32/lib/libwinpthread.a /d/a/prog/lib/ 
+        run: find / | grep -i pthread 
       - name: install nauty
         run: cd deps/nauty ; export CFLAGS="-O3 -fPIC -flto" ; export LDFLAGS="-O3 -fPIC -flto" ; 
              export IDIR=/d/a/prog/ ;
