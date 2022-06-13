@@ -90,9 +90,7 @@ jobs:
              export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/ -fPIC" ; 
              export LDFLAGS="-lasan" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
-             ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --without-data
-             --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty"
-             --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
+             ./coinbrew build Cbc@master --without-glpk --without-asl --without-mumps --without-data --with-nauty-cflags="-I${IDIR}/include/" --with-nauty-lflags="-L${IDIR}/lib/ -lnauty" --with-zlib-cflags="-I${IDIR}/include/" --with-zlib-lflags="-L${IDIR}/lib/ -lzlib" --disable-shared --enable-static --enable-cbc-parallel --tests none --verbosity=4 --prefix=${IDIR}/
       - name: Build shared library
         run: export PATH=/opt/gcc/bin/:$PATH ; export IDIR=/home/runner/prog/; export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
              g++ -shared -o ${IDIR}/lib/cbc-c-linux-x86-64.so
