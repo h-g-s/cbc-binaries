@@ -103,8 +103,8 @@ jobs:
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -lasan -L${IDIR}/lib/" ; 
              export CXXFLAGS="-Og -g3 -fsanitize=address -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
-             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
-                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -lasan -ldl -lpthread
+             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -fsanitize=address -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -lasan -ldl -lpthread
+             ls ${IDIR}/bin/ -l
              ${IDIR}/bin/c-interface-solver
       - uses: actions/upload-artifact@v2
         with:
@@ -179,8 +179,8 @@ jobs:
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -L${IDIR}/lib/" ; 
              export CXXFLAGS="-Og -g3 -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
-             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ 
-                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
+             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -Og -g3 -DCBC_THREAD -I${IDIR}/include/coin-or/ c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
+             ls ${IDIR}/bin/ -l
              ${IDIR}/bin/c-interface-solver
       - uses: actions/upload-artifact@v2
         with:
@@ -267,8 +267,8 @@ jobs:
              ls -l ${IDIR}/lib/ ; export LDFLAGS="-static -static-libgcc -static-libstdc++ -static-libgfortran -L${IDIR}/lib/" ; 
              export CXXFLAGS="-O3 -DNDEBUG -I${IDIR}/include/ -I${IDIR}/include/coin-or/" ; 
              export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${IDIR}/lib/pkgconfig ; 
-             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG -DCBC_THREAD -I${IDIR}/include/coin-or/ 
-                        c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
+             g++ -o ${IDIR}/bin/c-interface-solver `pkg-config --cflags cbc cgl osi-clp clp osi coinutils` -fPIC -O3 -DNDEBUG -DCBC_THREAD -I${IDIR}/include/coin-or/ c-interface-solver.c `pkg-config --libs cbc cgl osi-clp clp osi coinutils` -ldl -lpthread
+             ls -l ${IDIR}/bin/
              ${IDIR}/bin/c-interface-solver
       - uses: actions/upload-artifact@v2
         with:
