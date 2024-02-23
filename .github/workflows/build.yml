@@ -53,9 +53,8 @@ jobs:
         repository: coin-or/coinbrew
         path: coinbrew
     - name: Build project
-      with:
-        packages: zlib1g-dev libnauty2-dev gfortran liblapack-dev libmetis-dev libnauty2-dev pkg-config gfortran pkg-config
       run: |
+        sudo apt-get install -y zlib1g-dev libnauty2-dev gfortran liblapack-dev libmetis-dev libnauty2-dev pkg-config gfortran pkg-config build-essential
         bash coinbrew/coinbrew build Cbc@master --prefix=${HOME}/prog/  --enable-relocatable --tests none --verbosity 2
         ls ${HOME}/prog/lib/
     - name: Zip libraries
