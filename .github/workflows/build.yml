@@ -44,7 +44,6 @@ jobs:
         name: cbc-c-darwin-x86-64
         path: /Users/runner/prog/lib/cbc-c-darwin-x86-64.dylib
 
-jobs:
   ubuntu-20-build-release:
     runs-on: ubuntu-20.04
     steps:
