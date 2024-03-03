@@ -153,7 +153,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain mingw-w64-x86_64-ntldd tar gfortran
+          install: git base-devel gcc mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-toolchain mingw-w64-x86_64-ntldd tar mingw-w64-x86_64-gcc-fortran
       - name: create install dir
         run: mkdir -p /d/a/prog/ ; mkdir -p /d/a/prog/include ; mkdir -p /d/a/prog/lib
       - name: copy pthread static
