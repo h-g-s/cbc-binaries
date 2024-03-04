@@ -65,7 +65,7 @@ jobs:
         name: cbc-ubuntu-20
         path: /home/runner/cbc-ubuntu-20.zip 
 
- windows-build:
+  windows-build:
     runs-on: windows-2019
     defaults:
       run:
